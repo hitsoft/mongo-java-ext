@@ -1,4 +1,4 @@
-package com.hitsoft.mongo;
+package com.hitsoft.mongo.managed;
 
 import org.junit.Assert;
 import org.junit.Test;

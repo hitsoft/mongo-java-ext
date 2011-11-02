@@ -1,4 +1,4 @@
-package com.hitsoft.mongo;
+package com.hitsoft.mongo.basic;
 
 import com.hitsoft.mongo.basic.BasicDBObjectExt;
 import com.hitsoft.mongo.basic.DBObjectExt;
