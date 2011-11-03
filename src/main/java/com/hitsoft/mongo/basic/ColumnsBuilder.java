@@ -3,12 +3,7 @@ package com.hitsoft.mongo.basic;
 /**
  *
  */
-public class ColumnsBuilder {
-
-    private DBObjectBuilder obj = DBObjectBuilder.start();
-
-    private ColumnsBuilder() {
-    }
+public class ColumnsBuilder extends BaseBuilder {
 
     public static ColumnsBuilder start() {
         return new ColumnsBuilder();
@@ -19,7 +14,4 @@ public class ColumnsBuilder {
         return this;
     }
 
-    public DBObjectExt get() {
-        return obj.get();
-    }
 }
