@@ -11,7 +11,7 @@ public class HideFieldsBuilder extends BaseBuilder {
         return new HideFieldsBuilder();
     }
 
-    public HideFieldsBuilder add(Enum field) throws DBObjectExt.WrongFieldName {
+    public HideFieldsBuilder add(Enum field) {
         obj.add(field, 0);
         return this;
     }

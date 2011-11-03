@@ -24,20 +24,12 @@ public interface DBObjectExt extends DBObject {
         <T extends Enum> T asEnum(Class<T> clazz);
     }
 
-    public static class WrongFieldName extends Throwable {
-        public Enum field;
-        public WrongFieldName(Enum field) {
-            super(String.format("Wrong field name: '%s'. Field names can not start or end with '_' char, except reserved field '_id'", field.name()));
-            this.field = field;
-        }
-    }
-
     String getId();
     void setId(String id);
 
     Value get(String field);
-    Value get(Enum field) throws WrongFieldName;
+    Value get(Enum field);
 
     Object put(String field, Object value);
-    Object put(Enum field, Object value) throws WrongFieldName;
+    Object put(Enum field, Object value);
 }

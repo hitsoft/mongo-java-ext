@@ -1,7 +1,5 @@
 package com.hitsoft.mongo.basic;
 
-import com.hitsoft.mongo.basic.BasicDBObjectExt;
-import com.hitsoft.mongo.basic.DBObjectExt;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,33 +18,19 @@ public class BasicDBObjectExtTest {
         COMPANY_NAME,
         VERY_LONG_FIELD_NAME,
         _TEST,
-        TEST_;
+        TEST_,
+        _SS_TEST
     }
 
     @Test
     public void testCamelizeFieldName() throws Exception {
-        try {
-            Assert.assertEquals("_id", BasicDBObjectExt.camelizeFieldName(Field._ID));
-            Assert.assertEquals("name", BasicDBObjectExt.camelizeFieldName(Field.NAME));
-            Assert.assertEquals("company", BasicDBObjectExt.camelizeFieldName(Field.COMPANY));
-            Assert.assertEquals("companyName", BasicDBObjectExt.camelizeFieldName(Field.COMPANY_NAME));
-            Assert.assertEquals("veryLongFieldName", BasicDBObjectExt.camelizeFieldName(Field.VERY_LONG_FIELD_NAME));
-        } catch (DBObjectExt.WrongFieldName wrongFieldName) {
-            Assert.fail(wrongFieldName.getMessage());
-        }
-        boolean error = false;
-        try {
-            BasicDBObjectExt.camelizeFieldName(Field._TEST);
-        } catch (DBObjectExt.WrongFieldName wrongFieldName) {
-            error = true;
-        }
-        Assert.assertTrue(error);
-        error = false;
-        try {
-            BasicDBObjectExt.camelizeFieldName(Field.TEST_);
-        } catch (DBObjectExt.WrongFieldName wrongFieldName) {
-            error = true;
-        }
-        Assert.assertTrue(error);
+        Assert.assertEquals("_id", BasicDBObjectExt.camelizeFieldName(Field._ID));
+        Assert.assertEquals("name", BasicDBObjectExt.camelizeFieldName(Field.NAME));
+        Assert.assertEquals("company", BasicDBObjectExt.camelizeFieldName(Field.COMPANY));
+        Assert.assertEquals("companyName", BasicDBObjectExt.camelizeFieldName(Field.COMPANY_NAME));
+        Assert.assertEquals("veryLongFieldName", BasicDBObjectExt.camelizeFieldName(Field.VERY_LONG_FIELD_NAME));
+        Assert.assertEquals("test", BasicDBObjectExt.camelizeFieldName(Field._TEST));
+        Assert.assertEquals("test", BasicDBObjectExt.camelizeFieldName(Field.TEST_));
+        Assert.assertEquals("$test", BasicDBObjectExt.camelizeFieldName(Field._SS_TEST));
     }
 }

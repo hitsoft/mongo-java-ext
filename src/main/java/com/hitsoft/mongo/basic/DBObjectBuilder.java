@@ -14,12 +14,16 @@ public class DBObjectBuilder {
         return new DBObjectBuilder();
     }
 
-    public DBObjectBuilder add(Enum field, Object value) throws DBObjectExt.WrongFieldName {
+    public DBObjectBuilder add(Enum field, Object value) {
         obj.put(field, value);
         return this;
     }
 
     public DBObjectExt get() {
         return obj;
+    }
+
+    public static DBObjectExt single(Enum field, Object value) {
+        return start().add(field, value).get();
     }
 }

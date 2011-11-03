@@ -11,12 +11,12 @@ public class SortBuilder extends BaseBuilder {
         return new SortBuilder();
     }
 
-    public SortBuilder asc(Enum field) throws DBObjectExt.WrongFieldName {
+    public SortBuilder asc(Enum field) {
         obj.add(field, 1);
         return this;
     }
 
-    public SortBuilder desc(Enum field) throws DBObjectExt.WrongFieldName {
+    public SortBuilder desc(Enum field) {
         obj.add(field, -1);
         return this;
     }

@@ -9,7 +9,7 @@ public class ShowFieldsBuilder extends BaseBuilder {
         return new ShowFieldsBuilder();
     }
 
-    public ShowFieldsBuilder add(Enum field) throws DBObjectExt.WrongFieldName {
+    public ShowFieldsBuilder add(Enum field) {
         obj.add(field, 1);
         return this;
     }
