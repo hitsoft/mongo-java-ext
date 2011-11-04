@@ -145,7 +145,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder gt(Enum field, Object value) {
         return singleAction(field, Operator.$GT, value);
@@ -156,7 +156,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder lt(Enum field, Object value) {
         return singleAction(field, Operator.$LT, value);
@@ -167,7 +167,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder gte(Enum field, Object value) {
         return singleAction(field, Operator.$GTE, value);
@@ -178,7 +178,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder lte(Enum field, Object value) {
         return singleAction(field, Operator.$LTE, value);
@@ -190,7 +190,7 @@ public class SearchBuilder extends BaseBuilder {
      * @param field condition field
      * @param from  value
      * @param to    value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder between(Enum field, Object from, Object to) {
         obj.add(field, DBObjectBuilder.start()
@@ -208,7 +208,7 @@ public class SearchBuilder extends BaseBuilder {
      * @param to          value
      * @param includeFrom if true then #from value will be included
      * @param includeTo   if true then #to value will be included
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder between(Enum field, Object from, Object to, boolean includeFrom, boolean includeTo) {
         DBObjectBuilder cond = DBObjectBuilder.start();
@@ -230,7 +230,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field     condition field
      * @param condition value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder all(Enum field, SearchBuilder condition) {
         List<DBObjectExt> list = new ArrayList<DBObjectExt>();
@@ -244,7 +244,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field      condition field
      * @param conditions value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder all(Enum field, Collection<SearchBuilder> conditions) {
         return multipleConditionsAction(field, Operator.$ALL, conditions);
@@ -255,7 +255,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder exists(Enum field, boolean value) {
         return singleAction(field, Operator.$EXISTS, value);
@@ -267,7 +267,7 @@ public class SearchBuilder extends BaseBuilder {
      * @param field condition field
      * @param mod   value
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder mod(Enum field, int mod, int value) {
         List<Integer> param = new ArrayList<Integer>();
@@ -281,7 +281,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param value value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder ne(Enum field, Object value) {
         return singleAction(field, Operator.$NE, value);
@@ -292,7 +292,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field  condition field
      * @param values value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder in(Enum field, List values) {
         return singleAction(field, Operator.$IN, values);
@@ -304,7 +304,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field  condition field
      * @param values value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder nin(Enum field, List values) {
         return singleAction(field, Operator.$NIN, values);
@@ -316,7 +316,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field      condition field
      * @param conditions value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder nor(Enum field, Collection<SearchBuilder> conditions) {
         return multipleConditionsAction(field, Operator.$NOR, conditions);
@@ -328,7 +328,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field      condition field
      * @param conditions value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder or(Enum field, Collection<SearchBuilder> conditions) {
         return multipleConditionsAction(field, Operator.$OR, conditions);
@@ -340,7 +340,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field      condition field
      * @param conditions value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder and(Enum field, Collection<SearchBuilder> conditions) {
         return multipleConditionsAction(field, Operator.$AND, conditions);
@@ -351,7 +351,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param size  value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder size(Enum field, int size) {
         return singleAction(field, Operator.$SIZE, size);
@@ -362,7 +362,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param type  value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder type(Enum field, FieldType type) {
         return singleAction(field, Operator.$TYPE, type.key());
@@ -373,7 +373,7 @@ public class SearchBuilder extends BaseBuilder {
      *
      * @param field condition field
      * @param expr  value
-     * @return self
+     * @return <code>this</code>
      */
     public SearchBuilder regex(Enum field, String expr) {
         Pattern pattern = Pattern.compile(expr);

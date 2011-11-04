@@ -5,9 +5,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import java.util.List;
  * Basic DBObjectExt implementation class
  */
 public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
-    public static final int MONEY_PRECISION = 4;
 
     public BasicDBObjectExt() {
         super();
@@ -109,7 +106,8 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
         public <T extends Enum> T asEnum(Class<T> clazz) {
             T result = null;
             if (val != null)
-                result = (T)Enum.valueOf(clazz, asString());
+                //noinspection RedundantCast
+                result = (T) Enum.valueOf(clazz, asString());
             return result;
         }
 
@@ -121,7 +119,7 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
                     if (clazz.equals(DBObjectExt.class)) {
                         if (item instanceof DBObject) {
                             //noinspection unchecked
-                            result.add((T)new BasicDBObjectExt((DBObject)item));
+                            result.add((T) new BasicDBObjectExt((DBObject) item));
                         }
                     } else {
                         if (clazz.isInstance(item)) {
@@ -162,7 +160,8 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
             val = ((Enum) value).name();
         } else if (value instanceof DBObjectBuilder) {
             val = ((DBObjectBuilder) value).get();
-        }
+        } else if (value instanceof BaseBuilder)
+            val = ((BaseBuilder) value).get();
         return super.put(field, val);
     }
 

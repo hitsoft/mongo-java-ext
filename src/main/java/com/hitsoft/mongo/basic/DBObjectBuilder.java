@@ -5,7 +5,7 @@ package com.hitsoft.mongo.basic;
  */
 public class DBObjectBuilder {
 
-    private DBObjectExt obj = new BasicDBObjectExt();
+    DBObjectExt obj = new BasicDBObjectExt();
 
     private DBObjectBuilder() {
     }
