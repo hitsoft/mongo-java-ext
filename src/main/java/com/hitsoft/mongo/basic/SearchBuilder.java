@@ -47,80 +47,80 @@ public class SearchBuilder extends BaseBuilder {
         /**
          * Greater Than (>)
          */
-        _SS_GT,
+        $GT,
         /**
          * Less Than (<)
          */
-        _SS_LT,
+        $LT,
         /**
          * Greater Than or Equal (>=)
          */
-        _SS_GTE,
+        $GTE,
         /**
          * Less Than or Equal (<=)
          */
-        _SS_LTE,
+        $LTE,
         /**
          * The $all operator is similar to $in, but instead of matching any value in the
          * specified array all values in the array must be matched.
          */
-        _SS_ALL,
+        $ALL,
         /**
          * Check for existence (or lack thereof) of a field.
          */
-        _SS_EXISTS,
+        $EXISTS,
         /**
          * The $mod operator allows you to do fast modulo queries to replace a common case for where clauses.
          */
-        _SS_MOD,
+        $MOD,
         /**
          * Not Equals (!=)
          */
-        _SS_NE,
+        $NE,
         /**
          * The $in operator is analogous to the SQL IN modifier, allowing you to specify an array of possible matches.
          */
-        _SS_IN,
+        $IN,
         /**
          * The $nin operator is similar to $in except that it selects objects for which the specified field does
          * not have any value in the specified array.
          */
-        _SS_NIN,
+        $NIN,
         /**
          * The $nor operator lets you use a boolean or expression to do queries.
          * You give $nor a list of expressions, none of which can satisfy the query.
          */
-        _SS_NOR,
+        $NOR,
         /**
          * The $or operator lets you use boolean or in a query. You give $or an array of expressions,
          * any of which can satisfy the query.
          */
-        _SS_OR,
+        $OR,
         /**
          * The $and operator lets you use boolean and in a query. You give $and an array of expressions,
          * all of which must match to satisfy the query.
          */
-        _SS_AND,
+        $AND,
         /**
          * The $size operator matches any array with the specified number of elements.
          */
-        _SS_SIZE,
+        $SIZE,
         /**
          * The $type operator matches values based on their BSON type.
          */
-        _SS_TYPE,
+        $TYPE,
         /**
          * Regular Expression
          */
-        _SS_REGEX,
+        $REGEX,
         /**
          * Regular Expression Options
          */
-        _SS_OPTIONS,
+        $OPTIONS,
         /**
          * Not operator
          */
-        _SS_NOT
+        $NOT
     }
 
     private SearchBuilder singleAction(Enum field, Operator operator, Object value) {
@@ -148,7 +148,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder gt(Enum field, Object value) {
-        return singleAction(field, Operator._SS_GT, value);
+        return singleAction(field, Operator.$GT, value);
     }
 
     /**
@@ -159,7 +159,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder lt(Enum field, Object value) {
-        return singleAction(field, Operator._SS_LT, value);
+        return singleAction(field, Operator.$LT, value);
     }
 
     /**
@@ -170,7 +170,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder gte(Enum field, Object value) {
-        return singleAction(field, Operator._SS_GTE, value);
+        return singleAction(field, Operator.$GTE, value);
     }
 
     /**
@@ -181,7 +181,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder lte(Enum field, Object value) {
-        return singleAction(field, Operator._SS_LTE, value);
+        return singleAction(field, Operator.$LTE, value);
     }
 
     /**
@@ -194,8 +194,8 @@ public class SearchBuilder extends BaseBuilder {
      */
     public SearchBuilder between(Enum field, Object from, Object to) {
         obj.add(field, DBObjectBuilder.start()
-                .add(Operator._SS_GT, from)
-                .add(Operator._SS_LT, to)
+                .add(Operator.$GT, from)
+                .add(Operator.$LT, to)
                 .get());
         return this;
     }
@@ -213,13 +213,13 @@ public class SearchBuilder extends BaseBuilder {
     public SearchBuilder between(Enum field, Object from, Object to, boolean includeFrom, boolean includeTo) {
         DBObjectBuilder cond = DBObjectBuilder.start();
         if (includeFrom)
-            cond.add(Operator._SS_GTE, from);
+            cond.add(Operator.$GTE, from);
         else
-            cond.add(Operator._SS_GT, from);
+            cond.add(Operator.$GT, from);
         if (includeTo)
-            cond.add(Operator._SS_LTE, to);
+            cond.add(Operator.$LTE, to);
         else
-            cond.add(Operator._SS_LT, to);
+            cond.add(Operator.$LT, to);
         obj.add(field, cond.get());
         return this;
     }
@@ -235,7 +235,7 @@ public class SearchBuilder extends BaseBuilder {
     public SearchBuilder all(Enum field, SearchBuilder condition) {
         List<DBObjectExt> list = new ArrayList<DBObjectExt>();
         list.add(condition.get());
-        return singleAction(field, Operator._SS_ALL, list);
+        return singleAction(field, Operator.$ALL, list);
     }
 
     /**
@@ -247,7 +247,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder all(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator._SS_ALL, conditions);
+        return multipleConditionsAction(field, Operator.$ALL, conditions);
     }
 
     /**
@@ -258,7 +258,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder exists(Enum field, boolean value) {
-        return singleAction(field, Operator._SS_EXISTS, value);
+        return singleAction(field, Operator.$EXISTS, value);
     }
 
     /**
@@ -273,7 +273,7 @@ public class SearchBuilder extends BaseBuilder {
         List<Integer> param = new ArrayList<Integer>();
         param.add(mod);
         param.add(value);
-        return singleAction(field, Operator._SS_MOD, value);
+        return singleAction(field, Operator.$MOD, value);
     }
 
     /**
@@ -284,7 +284,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder ne(Enum field, Object value) {
-        return singleAction(field, Operator._SS_NE, value);
+        return singleAction(field, Operator.$NE, value);
     }
 
     /**
@@ -295,7 +295,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder in(Enum field, List values) {
-        return singleAction(field, Operator._SS_IN, values);
+        return singleAction(field, Operator.$IN, values);
     }
 
     /**
@@ -307,7 +307,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder nin(Enum field, List values) {
-        return singleAction(field, Operator._SS_NIN, values);
+        return singleAction(field, Operator.$NIN, values);
     }
 
     /**
@@ -319,7 +319,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder nor(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator._SS_NOR, conditions);
+        return multipleConditionsAction(field, Operator.$NOR, conditions);
     }
 
     /**
@@ -331,7 +331,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder or(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator._SS_OR, conditions);
+        return multipleConditionsAction(field, Operator.$OR, conditions);
     }
 
     /**
@@ -343,7 +343,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder and(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator._SS_AND, conditions);
+        return multipleConditionsAction(field, Operator.$AND, conditions);
     }
 
     /**
@@ -354,7 +354,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder size(Enum field, int size) {
-        return singleAction(field, Operator._SS_SIZE, size);
+        return singleAction(field, Operator.$SIZE, size);
     }
 
     /**
@@ -365,7 +365,7 @@ public class SearchBuilder extends BaseBuilder {
      * @return self
      */
     public SearchBuilder type(Enum field, FieldType type) {
-        return singleAction(field, Operator._SS_TYPE, type.key());
+        return singleAction(field, Operator.$TYPE, type.key());
     }
 
     /**
@@ -377,12 +377,12 @@ public class SearchBuilder extends BaseBuilder {
      */
     public SearchBuilder regex(Enum field, String expr) {
         Pattern pattern = Pattern.compile(expr);
-        return singleAction(field, Operator._SS_REGEX, pattern);
+        return singleAction(field, Operator.$REGEX, pattern);
     }
 
     public SearchBuilder regex(Enum field, String expr, int flags) {
         Pattern pattern = Pattern.compile(expr, flags);
-        return singleAction(field, Operator._SS_REGEX, pattern);
+        return singleAction(field, Operator.$REGEX, pattern);
     }
 
 }

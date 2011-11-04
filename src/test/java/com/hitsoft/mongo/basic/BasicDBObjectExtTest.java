@@ -19,7 +19,8 @@ public class BasicDBObjectExtTest {
         VERY_LONG_FIELD_NAME,
         _TEST,
         TEST_,
-        _SS_TEST
+        _$TEST,
+        $TEST
     }
 
     @Test
@@ -31,6 +32,7 @@ public class BasicDBObjectExtTest {
         Assert.assertEquals("veryLongFieldName", BasicDBObjectExt.camelizeFieldName(Field.VERY_LONG_FIELD_NAME));
         Assert.assertEquals("test", BasicDBObjectExt.camelizeFieldName(Field._TEST));
         Assert.assertEquals("test", BasicDBObjectExt.camelizeFieldName(Field.TEST_));
-        Assert.assertEquals("$test", BasicDBObjectExt.camelizeFieldName(Field._SS_TEST));
+        Assert.assertEquals("$test", BasicDBObjectExt.camelizeFieldName(Field._$TEST));
+        Assert.assertEquals("$test", BasicDBObjectExt.camelizeFieldName(Field.$TEST));
     }
 }

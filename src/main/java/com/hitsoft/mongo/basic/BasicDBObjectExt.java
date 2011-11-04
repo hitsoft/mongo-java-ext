@@ -109,7 +109,7 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
         public <T extends Enum> T asEnum(Class<T> clazz) {
             T result = null;
             if (val != null)
-                result = Enum.valueOf(clazz, asString());
+                result = (T)Enum.valueOf(clazz, asString());
             return result;
         }
 
@@ -173,8 +173,6 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
     static String camelizeFieldName(Enum field) {
         String res = field.name().toLowerCase();
         if (!"_id".equals(res)) {
-            if (res.startsWith("_ss_"))
-                res = "$" + res.substring(4);
             if (res.startsWith("_"))
                 res = res.substring(1);
             if (res.endsWith("_"))
