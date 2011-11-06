@@ -5,7 +5,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +31,11 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
 
         public Object val() {
             return val;
+        }
+
+        @Override
+        public ObjectId asId() {
+            return (ObjectId) val;
         }
 
         public DBObjectExt asObject() {
@@ -112,46 +116,28 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
         }
 
         public <T> List<T> asList(Class<T> clazz) {
-            List<T> result = new ArrayList<T>();
-            if (val.getClass().isArray()) {
-                //noinspection ConstantConditions
-                for (Object item : (Object[]) val) {
-                    if (clazz.equals(DBObjectExt.class)) {
-                        if (item instanceof DBObject) {
-                            //noinspection unchecked
-                            result.add((T) new BasicDBObjectExt((DBObject) item));
-                        }
-                    } else {
-                        if (clazz.isInstance(item)) {
-                            //noinspection unchecked
-                            result.add((T) item);
-                        }
-                    }
-                }
-            }
-            return result;
+            //noinspection unchecked
+            return (List<T>) val();
         }
     }
 
 
-    public String getId() {
-        return get("_id").asString();
+    public ObjectId getId() {
+        return getV(DBObjectExt.Field._ID).asId();
     }
 
-    public void setId(String id) {
-        put("_id", new ObjectId(id));
+    public void setId(ObjectId id) {
+        put(DBObjectExt.Field._ID, id);
     }
 
-    @Override
-    public Value get(String key) {
+    public Value getV(String key) {
         return new BasicValue(super.get(key));
     }
 
-    public Value get(Enum field) {
-        return get(camelizeFieldName(field));
+    public Value getV(Enum field) {
+        return getV(FieldName.get(field));
     }
 
-    @Override
     public Object put(String field, Object value) {
         Object val = value;
         if (value instanceof Currency) {
@@ -166,29 +152,11 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
     }
 
     public Object put(Enum field, Object value) {
-        return put(camelizeFieldName(field), value);
+        return put(FieldName.get(field), value);
     }
 
-    static String camelizeFieldName(Enum field) {
-        String res = field.name().toLowerCase();
-        if (!"_id".equals(res)) {
-            if (res.startsWith("_"))
-                res = res.substring(1);
-            if (res.endsWith("_"))
-                res = res.substring(0, res.length() - 1);
-            while (res.contains("_")) {
-                String tmp = res;
-                int idx = tmp.indexOf("_");
-                res = tmp.substring(0, idx);
-                if (tmp.length() > idx + 1) {
-                    res = res + tmp.substring(idx + 1, idx + 2).toUpperCase();
-                }
-                if (tmp.length() > idx + 2) {
-                    res = res + tmp.substring(idx + 2);
-                }
-            }
-        }
-        return res;
+    public DBObject asDBObject() {
+        return this;
     }
 
 }

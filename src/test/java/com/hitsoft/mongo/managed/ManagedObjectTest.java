@@ -1,10 +1,6 @@
 package com.hitsoft.mongo.managed;
 
-import org.junit.Assert;
 import org.junit.Test;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,4 +10,8 @@ import java.math.RoundingMode;
  */
 public class ManagedObjectTest {
 
+    @Test
+    public void testName() throws Exception {
+        // TODO implement ManagedObjectTest . testName
+    }
 }

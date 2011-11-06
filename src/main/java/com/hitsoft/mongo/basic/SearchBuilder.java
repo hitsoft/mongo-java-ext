@@ -131,13 +131,18 @@ public class SearchBuilder extends BaseBuilder {
     private SearchBuilder multipleConditionsAction(Enum field, Operator operator, Collection<SearchBuilder> conditions) {
         List<DBObjectExt> list = new ArrayList<DBObjectExt>();
         for (SearchBuilder condition : conditions) {
-            list.add(condition.get());
+            list.add(condition.getExt());
         }
         return singleAction(field, operator, list);
     }
 
     public static SearchBuilder start() {
         return new SearchBuilder();
+    }
+
+    public SearchBuilder equal(Enum field, Object value) {
+        obj.add(field, value);
+        return this;
     }
 
     /**
@@ -234,7 +239,7 @@ public class SearchBuilder extends BaseBuilder {
      */
     public SearchBuilder all(Enum field, SearchBuilder condition) {
         List<DBObjectExt> list = new ArrayList<DBObjectExt>();
-        list.add(condition.get());
+        list.add(condition.getExt());
         return singleAction(field, Operator.$ALL, list);
     }
 
@@ -273,7 +278,7 @@ public class SearchBuilder extends BaseBuilder {
         List<Integer> param = new ArrayList<Integer>();
         param.add(mod);
         param.add(value);
-        return singleAction(field, Operator.$MOD, value);
+        return singleAction(field, Operator.$MOD, param);
     }
 
     /**

@@ -3,7 +3,7 @@ package com.hitsoft.mongo.basic;
 /**
  *
  */
-public class ShowFieldsBuilder extends BaseBuilder {
+public class ShowFieldsBuilder extends PartialObjectBuilder {
 
     public static ShowFieldsBuilder start() {
         return new ShowFieldsBuilder();

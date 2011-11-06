@@ -5,7 +5,7 @@ package com.hitsoft.mongo.basic;
  * Date: 03.11.11
  * Time: 22:34
  */
-public class HideFieldsBuilder extends BaseBuilder {
+public class HideFieldsBuilder extends PartialObjectBuilder {
 
     public static HideFieldsBuilder start() {
         return new HideFieldsBuilder();

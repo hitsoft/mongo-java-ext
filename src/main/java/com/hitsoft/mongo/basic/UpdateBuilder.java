@@ -29,7 +29,7 @@ public class UpdateBuilder extends BaseBuilder {
     }
 
     private UpdateBuilder appendSingle(Operation operation, Enum field, Object value) {
-        DBObjectExt res = obj.obj.get(field).asObject();
+        DBObjectExt res = obj.obj.getV(field).asObject();
         if (res == null)
             res = new BasicDBObjectExt();
         res.put(field, value);
@@ -142,7 +142,7 @@ public class UpdateBuilder extends BaseBuilder {
      * @param value value
      * @return <code>this</code>
      */
-    public UpdateBuilder popFirst(Enum field, Object value) {
+    public UpdateBuilder pull(Enum field, Object value) {
         if (value instanceof List) {
             return appendSingle(Operation.$PULL_ALL, field, value);
         } else {
@@ -158,7 +158,7 @@ public class UpdateBuilder extends BaseBuilder {
      * @return <code>this</code>
      */
     public UpdateBuilder rename(Enum oldField, Enum newField) {
-        return appendSingle(Operation.$RENAME, oldField, BasicDBObjectExt.camelizeFieldName(newField));
+        return appendSingle(Operation.$RENAME, oldField, FieldName.get(newField));
     }
 
 }
