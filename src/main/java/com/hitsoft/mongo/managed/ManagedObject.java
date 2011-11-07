@@ -1,6 +1,7 @@
 package com.hitsoft.mongo.managed;
 
 import com.hitsoft.mongo.basic.SearchBuilder;
+import org.bson.types.ObjectId;
 
 /**
  * Managed object base class to store in MongoDB.
@@ -12,16 +13,16 @@ public class ManagedObject {
         _ID
     }
 
-    public class Find {
+    public class Search {
         SearchBuilder byId() {
             return SearchBuilder.start().equal(Field._ID, _id);
         }
     }
 
     @MongoId
-    private String _id;
+    ObjectId _id;
 
-    public String id() {
+    public ObjectId id() {
         return _id;
     }
 
@@ -33,13 +34,11 @@ public class ManagedObject {
         StringBuilder sb = new StringBuilder();
         Class clazz = getClass();
         sb.append(clazz.getSimpleName())
-                .append("{");
-        boolean first = true;
+                .append("{")
+                .append("_id=")
+                .append(_id);
         for (java.lang.reflect.Field field : clazz.getFields()) {
-            if (first)
-                first = false;
-            else
-                sb.append(", ");
+            sb.append(", ");
             sb.append(field.getName()).append("=");
             Object val = null;
             try {
@@ -62,6 +61,10 @@ public class ManagedObject {
         if (this != o) {
             Class clazz = this.getClass();
             result = (o != null && clazz.equals(o.getClass()));
+            result = (result
+                    && ((this._id == null && ((ManagedObject) o)._id == null)
+                    || (this._id != null && ((ManagedObject) o)._id != null)
+                    && this._id.equals(((ManagedObject) o)._id)));
             if (result) {
                 for (java.lang.reflect.Field field : clazz.getFields()) {
                     if (result) {

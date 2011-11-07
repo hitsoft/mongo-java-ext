@@ -1,10 +1,13 @@
 package com.hitsoft.mongo.managed;
 
+import com.hitsoft.mongo.basic.Connection;
 import com.hitsoft.mongo.basic.DBObjectBuilder;
 import com.hitsoft.mongo.basic.DBObjectExt;
 import com.hitsoft.test.AssertExt;
 import org.bson.types.ObjectId;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,6 +20,17 @@ import java.util.List;
  * Time: 18:50
  */
 public class ManagedRepositoryTest {
+
+    @Before
+    public void setUp() throws Exception {
+        Connection.setupTestInstance();
+        Connection.getInstance().dropDatabase();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Connection.getInstance().dropDatabase();
+    }
 
     public static enum TestEnum {
         TEST,

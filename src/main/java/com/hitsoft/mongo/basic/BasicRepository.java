@@ -17,14 +17,14 @@ public class BasicRepository {
      * Interface used for processing database selection with BasicRepository.iterate functions
      */
     public interface Processor {
-        void process(DBObjectExt obj);
+        void process(DBObjectExt obj) throws IllegalAccessException, InstantiationException;
     }
 
     /**
      * Interface used to filter our some search result records by programmable conditions
      */
     public interface Filter {
-        boolean accept(DBObjectExt obj);
+        boolean accept(DBObjectExt obj) throws IllegalAccessException, InstantiationException;
     }
 
     public class FindBuilder {
@@ -131,7 +131,7 @@ public class BasicRepository {
             return result;
         }
 
-        public void execIterate(Processor processor) {
+        public void execIterate(Processor processor) throws InstantiationException, IllegalAccessException {
             DBCursor cursor = doExec();
             while (cursor.hasNext()) {
                 DBObjectExt obj = new BasicDBObjectExt(cursor.next());
@@ -139,7 +139,7 @@ public class BasicRepository {
             }
         }
 
-        public void execIterateUpdate(Processor processor) {
+        public void execIterateUpdate(Processor processor) throws InstantiationException, IllegalAccessException {
             DBCursor cursor = doExec();
             while (cursor.hasNext()) {
                 DBObjectExt obj = new BasicDBObjectExt(cursor.next());
@@ -148,7 +148,7 @@ public class BasicRepository {
             }
         }
 
-        public List<DBObjectExt> execFilter(Filter filter) {
+        public List<DBObjectExt> execFilter(Filter filter) throws InstantiationException, IllegalAccessException {
             List<DBObjectExt> result = new ArrayList<DBObjectExt>();
             DBCursor cursor = doExec();
             while (cursor.hasNext()) {
@@ -165,14 +165,6 @@ public class BasicRepository {
 
     private BasicRepository(Connection connection, String name) {
         this.collection = connection.getCollection(name);
-    }
-
-    public static BasicRepository getRepository(String collectionName) {
-        return new BasicRepository(Connection.getInstance(), collectionName);
-    }
-
-    public static BasicRepository getTestRepository() {
-        return getRepository("test");
     }
 
     public static BasicRepository getRepository(Connection connection, String collectionName) {

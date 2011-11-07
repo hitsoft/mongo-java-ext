@@ -19,6 +19,11 @@ public class DBObjectBuilder {
         return this;
     }
 
+    public DBObjectBuilder add(DBObjectExt values) {
+        obj.asDBObject().putAll(values.asDBObject().toMap());
+        return this;
+    }
+
     public DBObjectExt get() {
         return obj;
     }

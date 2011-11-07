@@ -1,5 +1,6 @@
 package com.hitsoft.mongo.basic;
 
+import com.hitsoft.mongo.repository.Basic;
 import com.hitsoft.test.AssertExt;
 import junit.framework.Assert;
 import org.junit.After;
@@ -32,7 +33,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testSave() throws Exception, BasicRepository.NotUniqueCondition {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj = rep.save(DBObjectBuilder.single(Field.NAME, "smeagol"));
         DBObjectExt obj1 = rep.findById(obj.getId());
         Assert.assertEquals(obj, obj1);
@@ -40,7 +41,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testRemove() throws Exception, BasicRepository.NotUniqueCondition {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj = rep.save(DBObjectBuilder.single(Field.NAME, "smeagol"));
         DBObjectExt obj1 = rep.findById(obj.getId());
         Assert.assertEquals(obj, obj1);
@@ -51,7 +52,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testFindAll() throws Exception {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj = rep.save(DBObjectBuilder.single(Field.NAME, "smeagol"));
         List<DBObjectExt> test = rep.find().exec();
         Assert.assertEquals(1, test.size());
@@ -65,7 +66,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testIterate() throws Exception {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj = rep.save(DBObjectBuilder.single(Field.NAME, "smeagol"));
         DBObjectExt obj1 = rep.save(DBObjectBuilder.single(Field.NAME, "gollum"));
         final int[] processed = {0};
@@ -136,7 +137,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testFindOne() throws Exception, BasicRepository.NotUniqueCondition {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj = rep.save(DBObjectBuilder.single(Field.NAME, "smeagol"));
         DBObjectExt obj1 = rep.save(DBObjectBuilder.single(Field.NAME, "gollum"));
         DBObjectExt obj2 = rep.save(DBObjectBuilder.single(Field.NAME, "gollum"));
@@ -155,7 +156,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testFindById() throws Exception, BasicRepository.NotUniqueCondition {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj = rep.save(DBObjectBuilder.single(Field.NAME, "smeagol"));
         DBObjectExt test = rep.findById(obj.getId());
         Assert.assertEquals(obj, test);
@@ -163,7 +164,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testFindDoExec() throws Exception {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         rep.save(DBObjectBuilder.start()
                 .add(Field.NAME, "smeagol")
                 .add(Field.VALUE, 1)
@@ -278,7 +279,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testFindExec() throws Exception, BasicRepository.NotUniqueCondition {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         DBObjectExt obj1 = rep.save(DBObjectBuilder.start()
                 .add(Field.NAME, "smeagol")
                 .add(Field.VALUE, 1)
@@ -370,7 +371,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testCount() throws Exception {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         rep.save(DBObjectBuilder.start()
                 .add(Field.NAME, "smeagol")
                 .add(Field.VALUE, 1)
@@ -399,7 +400,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testDistinct() throws Exception {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         rep.save(DBObjectBuilder.start()
                 .add(Field.NAME, "smeagol")
                 .add(Field.VALUE, 1)
@@ -418,7 +419,7 @@ public class BasicRepositoryTest {
 
     @Test
     public void testDistinctStrings() throws Exception {
-        BasicRepository rep = BasicRepository.getTestRepository();
+        BasicRepository rep = Basic.getTestRepository();
         rep.save(DBObjectBuilder.start()
                 .add(Field.NAME, "smeagol")
                 .add(Field.VALUE, 1)

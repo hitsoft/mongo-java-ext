@@ -145,6 +145,11 @@ public class SearchBuilder extends BaseBuilder {
         return this;
     }
 
+    public SearchBuilder equal(DBObjectExt sample) {
+        obj.add(sample);
+        return this;
+    }
+
     /**
      * Greater Than (>)
      *
