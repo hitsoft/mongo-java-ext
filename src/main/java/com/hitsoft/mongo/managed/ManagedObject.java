@@ -1,6 +1,5 @@
 package com.hitsoft.mongo.managed;
 
-import com.hitsoft.mongo.basic.SearchBuilder;
 import org.bson.types.ObjectId;
 
 /**
@@ -11,12 +10,6 @@ public class ManagedObject {
 
     public static enum Field {
         _ID
-    }
-
-    public class Search {
-        SearchBuilder byId() {
-            return SearchBuilder.start().equal(Field._ID, _id);
-        }
     }
 
     @MongoId

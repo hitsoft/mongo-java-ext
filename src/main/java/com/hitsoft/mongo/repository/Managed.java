@@ -40,23 +40,23 @@ public class Managed {
         return rep().findById(clazz, id);
     }
 
-    public <T extends ManagedObject> long count(Class<T> clazz, SearchBuilder conditions) {
+    public static <T extends ManagedObject> long count(Class<T> clazz, SearchBuilder conditions) {
         return rep().count(clazz, conditions);
     }
 
-    public <T extends ManagedObject> void ensureIndex(Class<T> clazz, SortBuilder orderBy) {
+    public static <T extends ManagedObject> void ensureIndex(Class<T> clazz, SortBuilder orderBy) {
         rep().ensureIndex(clazz, orderBy);
     }
 
-    public <T extends ManagedObject> void update(Class<T> clazz, SearchBuilder conditions, UpdateBuilder updates) {
+    public static <T extends ManagedObject> void update(Class<T> clazz, SearchBuilder conditions, UpdateBuilder updates) {
         rep().update(clazz, conditions, updates);
     }
 
-    public <T extends ManagedObject> List distinct(Class<T> clazz, Enum field, SearchBuilder conditions) {
+    public static <T extends ManagedObject> List distinct(Class<T> clazz, Enum field, SearchBuilder conditions) {
         return rep().distinct(clazz, field, conditions);
     }
 
-    public <T extends ManagedObject> List<String> distinctStrings(Class<T> clazz, Enum field, SearchBuilder conditions) {
+    public static <T extends ManagedObject> List<String> distinctStrings(Class<T> clazz, Enum field, SearchBuilder conditions) {
         return rep().distinctStrings(clazz, field, conditions);
     }
 }

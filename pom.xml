@@ -22,7 +22,7 @@
             </activation>
             <properties>
                 <build.environment>production</build.environment>
-                <product.version>0.0.1</product.version>
+                <product.version>1.0.0</product.version>
             </properties>
         </profile>
         <profile>

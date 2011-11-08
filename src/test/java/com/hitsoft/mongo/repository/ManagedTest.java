@@ -1,9 +1,9 @@
 package com.hitsoft.mongo.repository;
 
-import com.hitsoft.mongo.basic.Connection;
-import com.hitsoft.mongo.basic.SearchBuilder;
+import com.hitsoft.mongo.basic.*;
 import com.hitsoft.mongo.managed.ListField;
 import com.hitsoft.mongo.managed.ManagedObject;
+import com.hitsoft.mongo.managed.ManagedSearchBuilder;
 import com.hitsoft.mongo.managed.MongoRef;
 import org.bson.types.ObjectId;
 import org.junit.After;
@@ -83,6 +83,14 @@ public class ManagedTest {
     }
 
     public static class Address extends ManagedObject {
+
+        public static enum Field {
+            COUNTRY,
+            CITY,
+            STREET,
+            ADDRESS
+        }
+
         public String country;
         public String city;
         public String street;
@@ -115,32 +123,50 @@ public class ManagedTest {
     }
 
     @Test
-    public void testFindById() throws Exception {
-
+    public void testFindById() throws Exception, BasicRepository.NotUniqueCondition {
+        Address hitOffice = Managed.save(Address.apply("Russia", "Novosibirsk", "Inzhenernaya", "4a - 816"));
+        Address test = Managed.find(Address.class).byId(hitOffice.id());
+        Assert.assertEquals(hitOffice, test);
     }
 
     @Test
-    public void testCount() throws Exception {
-
+    public void testCount() throws Exception, BasicRepository.NotUniqueCondition {
+        Address hitOffice = Managed.save(Address.apply("Russia", "Novosibirsk", "Inzhenernaya", "4a - 816"));
+        long count = Managed.count(Address.class, ManagedSearchBuilder.byId(hitOffice));
+        Assert.assertEquals(1, count);
     }
 
     @Test
     public void testEnsureIndex() throws Exception {
-
+        Managed.ensureIndex(Address.class, SortBuilder.start()
+                .asc(Address.Field.COUNTRY)
+                .asc(Address.Field.CITY));
     }
 
     @Test
-    public void testUpdate() throws Exception {
-
+    public void testUpdate() throws Exception, BasicRepository.NotUniqueCondition {
+        Address hitOffice = Managed.save(Address.apply("Russia", "Novosibirsk", "Inzhenernaya", "4a - 816"));
+        Managed.update(Address.class,
+                ManagedSearchBuilder.byId(hitOffice),
+                UpdateBuilder.start()
+                        .set(Address.Field.COUNTRY, "Россия"));
+        Address test = Managed.find(Address.class).byId(hitOffice.id());
+        Assert.assertEquals("Россия", test.country);
     }
 
     @Test
     public void testDistinct() throws Exception {
-
+        Address hitOffice = Managed.save(Address.apply("Russia", "Novosibirsk", "Inzhenernaya", "4a - 816"));
+        List test = Managed.distinct(Address.class, Address.Field.COUNTRY, SearchBuilder.start());
+        Assert.assertEquals(1, test.size());
+        Assert.assertEquals("Russia", test.get(0));
     }
 
     @Test
     public void testDistinctStrings() throws Exception {
-
+        Address hitOffice = Managed.save(Address.apply("Russia", "Novosibirsk", "Inzhenernaya", "4a - 816"));
+        List<String> test = Managed.distinctStrings(Address.class, Address.Field.COUNTRY, SearchBuilder.start());
+        Assert.assertEquals(1, test.size());
+        Assert.assertEquals("Russia", test.get(0));
     }
 }
