@@ -12,6 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <internal.repo.path>file:../mongo-java-ext.mvn-repo/</internal.repo.path>
   </properties>
 
   <profiles>
@@ -94,4 +95,13 @@
       <version>1.6.6</version>
     </dependency>
   </dependencies>
+
+<distributionManagement>
+  <repository>
+    <id>internal.repo</id>
+    <name>Internal Repository</name>
+    <url>${internal.repo.path}</url>
+  </repository>
+</distributionManagement>
+
 </project>
