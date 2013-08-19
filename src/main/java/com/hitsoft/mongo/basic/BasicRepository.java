@@ -6,6 +6,7 @@ import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -180,6 +181,10 @@ public class BasicRepository {
         collection.remove(obj.asDBObject());
     }
 
+    public void remove(SearchBuilder conditions) {
+        collection.remove(conditions.get());
+    }
+
     public FindBuilder find() {
         return new FindBuilder();
     }
@@ -203,10 +208,19 @@ public class BasicRepository {
     }
 
     public List distinct(Enum field, SearchBuilder conditions) {
-        return collection.distinct(FieldName.get(field), conditions.get());
+        return distinct(FieldName.get(field), conditions);
     }
 
-    public List<String> distinctStrings(Enum field, SearchBuilder conditions) {
+    public List distinct(String field, SearchBuilder conditions) {
+        return collection.distinct(field, conditions.get());
+    }
+
+    public List<String> distinctStrings(Enum field, SearchBuilder
+            conditions) {
+        return distinctStrings(FieldName.get(field), conditions);
+    }
+
+    public List<String> distinctStrings(String field, SearchBuilder conditions) {
         List<String> result = new ArrayList<String>();
         for (Object val : distinct(field, conditions)) {
             result.add(val.toString());
@@ -218,5 +232,9 @@ public class BasicRepository {
         public NotUniqueCondition(SearchBuilder conditions) {
             super(String.format("Not unique conditions: '%s'", conditions.get().toString()));
         }
+    }
+
+    public void dropRepository() {
+        collection.drop();
     }
 }

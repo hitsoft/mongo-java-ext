@@ -2,6 +2,7 @@ package com.hitsoft.mongo.managed;
 
 import com.hitsoft.mongo.basic.DBObjectExt;
 import com.hitsoft.mongo.basic.SearchBuilder;
+import org.bson.types.ObjectId;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,5 +19,9 @@ public class ManagedSearchBuilder extends SearchBuilder {
         DBObjectExt res = ManagedRepository.saveToDBObjectExt(obj);
         res.setId(null);
         return start().equal(res);
+    }
+
+    public static SearchBuilder byId(ObjectId id) {
+        return start().equal(ManagedObject.Field._ID, id);
     }
 }

@@ -38,7 +38,7 @@ public class ManagedRepository {
         return object;
     }
 
-    static <T extends ManagedObject> void loadToDBObjectExt(T object, DBObjectExt from) throws IllegalAccessException, InstantiationException {
+    public static <T extends ManagedObject> void loadToDBObjectExt(T object, DBObjectExt from) throws IllegalAccessException, InstantiationException {
         object._id = from.getId();
         Class<T> clazz = (Class<T>) object.getClass();
         for (Field field : clazz.getFields()) {
@@ -68,7 +68,7 @@ public class ManagedRepository {
         }
     }
 
-    static <T extends ManagedObject> T loadFromDBObjectExt(Class<T> clazz, DBObjectExt obj) throws IllegalAccessException, InstantiationException {
+    public static <T extends ManagedObject> T loadFromDBObjectExt(Class<T> clazz, DBObjectExt obj) throws IllegalAccessException, InstantiationException {
         T result = clazz.newInstance();
         loadToDBObjectExt(result, obj);
         return result;
@@ -112,7 +112,7 @@ public class ManagedRepository {
         }
     }
 
-    static DBObjectExt saveToDBObjectExt(ManagedObject obj) throws IllegalAccessException {
+    public static DBObjectExt saveToDBObjectExt(ManagedObject obj) throws IllegalAccessException {
         DBObjectExt result;
         if (obj == null) {
             result = null;
@@ -259,4 +259,7 @@ public class ManagedRepository {
         return getRepository(clazz).distinctStrings(field, conditions);
     }
 
+    public <T extends ManagedObject> void remove(Class<T> clazz, SearchBuilder conditions) {
+        getRepository(clazz).remove(conditions);
+    }
 }

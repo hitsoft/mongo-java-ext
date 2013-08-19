@@ -59,4 +59,12 @@ public class Managed {
     public static <T extends ManagedObject> List<String> distinctStrings(Class<T> clazz, Enum field, SearchBuilder conditions) {
         return rep().distinctStrings(clazz, field, conditions);
     }
+
+    public static <T extends ManagedObject> void remove(Class<T> clazz, SearchBuilder conditions) {
+        rep().remove(clazz, conditions);
+    }
+
+    public static <T extends ManagedObject> void remove(T object) {
+        rep().remove(object.getClass(), SearchBuilder.start().equal(ManagedObject.Field._ID, object.id()));
+    }
 }

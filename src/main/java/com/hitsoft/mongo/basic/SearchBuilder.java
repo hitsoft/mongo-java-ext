@@ -1,5 +1,7 @@
 package com.hitsoft.mongo.basic;
 
+import com.mongodb.DBObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -134,6 +136,15 @@ public class SearchBuilder extends BaseBuilder {
             list.add(condition.getExt());
         }
         return singleAction(field, operator, list);
+    }
+
+    private SearchBuilder multipleConditionsAction(Operator operator, Collection<SearchBuilder> conditions) {
+        List<DBObjectExt> list = new ArrayList<DBObjectExt>();
+        for (SearchBuilder condition: conditions) {
+            list.add(condition.getExt());
+        }
+        obj.add(operator, list.toArray());
+        return this;
     }
 
     public static SearchBuilder start() {
@@ -328,8 +339,8 @@ public class SearchBuilder extends BaseBuilder {
      * @param conditions value
      * @return <code>this</code>
      */
-    public SearchBuilder nor(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator.$NOR, conditions);
+    public SearchBuilder nor(Collection<SearchBuilder> conditions) {
+        return multipleConditionsAction(Operator.$NOR, conditions);
     }
 
     /**
@@ -340,8 +351,8 @@ public class SearchBuilder extends BaseBuilder {
      * @param conditions value
      * @return <code>this</code>
      */
-    public SearchBuilder or(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator.$OR, conditions);
+    public SearchBuilder or(Collection<SearchBuilder> conditions) {
+        return multipleConditionsAction(Operator.$OR, conditions);
     }
 
     /**
@@ -352,8 +363,8 @@ public class SearchBuilder extends BaseBuilder {
      * @param conditions value
      * @return <code>this</code>
      */
-    public SearchBuilder and(Enum field, Collection<SearchBuilder> conditions) {
-        return multipleConditionsAction(field, Operator.$AND, conditions);
+    public SearchBuilder and(Collection<SearchBuilder> conditions) {
+        return multipleConditionsAction(Operator.$AND, conditions);
     }
 
     /**
@@ -395,4 +406,9 @@ public class SearchBuilder extends BaseBuilder {
         return singleAction(field, Operator.$REGEX, pattern);
     }
 
+    public static SearchBuilder fromDBObject(DBObject obj) {
+        SearchBuilder result = SearchBuilder.start();
+        result.obj.obj.asDBObject().putAll(obj.toMap());
+        return result;
+    }
 }

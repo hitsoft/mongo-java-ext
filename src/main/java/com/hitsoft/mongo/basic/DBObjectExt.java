@@ -38,6 +38,8 @@ public interface DBObjectExt {
 
         double asDouble();
 
+        boolean asBoolean();
+
         boolean isNull();
 
         <T extends Enum> T asEnum(Class<T> clazz);

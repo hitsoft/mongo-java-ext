@@ -103,6 +103,14 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
             return result;
         }
 
+        @Override
+        public boolean asBoolean() {
+            boolean result = false;
+            if (val instanceof Boolean)
+                result = ((Boolean) val).booleanValue();
+            return result;
+        }
+
         public boolean isNull() {
             return val == null;
         }

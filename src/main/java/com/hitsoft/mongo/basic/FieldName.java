@@ -10,6 +10,7 @@ public class FieldName {
         String res = field.name().toLowerCase();
         if (!"_id".equals(res)) {
             assert (!res.startsWith("_") && !res.endsWith("_")) : String.format("Field name enum constant '%s' should not start or end with '_' char.", field.name());
+            res.replaceAll("__", ".");
             while (res.contains("_")) {
                 String tmp = res;
                 int idx = tmp.indexOf("_");

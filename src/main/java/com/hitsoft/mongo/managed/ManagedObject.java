@@ -1,5 +1,6 @@
 package com.hitsoft.mongo.managed;
 
+import com.hitsoft.mongo.basic.SortBuilder;
 import org.bson.types.ObjectId;
 
 /**
@@ -77,5 +78,9 @@ public class ManagedObject {
             }
         }
         return result;
+    }
+
+    public static SortBuilder[] indexes() {
+        return new SortBuilder[0];
     }
 }
