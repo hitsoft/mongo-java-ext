@@ -6,10 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to mark some field as reference to another ManagedObject
+ * Created by IntelliJ IDEA.
+ * User: smeagol
+ * Date: 09.07.12
+ * Time: 16:56
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface MongoRef {
-    public Class ref();
+public @interface ObjectField {
+  //    public Class type() default void.class;
+  public Class type();
 }

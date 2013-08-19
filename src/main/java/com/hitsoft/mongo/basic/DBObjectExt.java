@@ -13,51 +13,55 @@ import java.util.List;
  */
 public interface DBObjectExt {
 
-    public static enum Field {
-        _ID
-    }
+  public static enum Field {
+    _ID
+  }
 
-    public static interface Value {
-        Object val();
+  public static interface Value {
+    Object val();
 
-        ObjectId asId();
+    ObjectId asId();
 
-        DBObjectExt asObject();
+    DBObjectExt asObject();
 
-        String asString();
+    String asString();
 
-        Date asDate();
+    Date asDate();
 
-        int asInt();
+    int asInt();
 
-        long asLong();
+    long asLong();
 
-        Currency asMoney();
+    Currency asMoney();
 
-        float asFloat();
+    float asFloat();
 
-        double asDouble();
+    double asDouble();
 
-        boolean asBoolean();
+    boolean asBoolean();
 
-        boolean isNull();
+    boolean isNull();
 
-        <T extends Enum> T asEnum(Class<T> clazz);
+    <T extends Enum> T asEnum(Class<T> clazz);
 
-        <T> List<T> asList(Class<T> clazz);
-    }
+    <T> List<T> asList(Class<T> clazz);
 
-    ObjectId getId();
+    Integer asInteger();
+  }
 
-    void setId(ObjectId id);
+  String getId();
 
-    Value getV(String field);
+  void setId(String id);
 
-    Value getV(Enum field);
+  Value getV(String field);
 
-    Object put(String field, Object value);
+  Value getV(Enum field);
 
-    Object put(Enum field, Object value);
+  Object put(String field, Object value);
 
-    DBObject asDBObject();
+  Object put(Enum field, Object value);
+
+  Object put(Enum[] field, Object value);
+
+  DBObject asDBObject();
 }

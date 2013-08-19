@@ -6,12 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Created by IntelliJ IDEA.
  * User: smeagol
- * Date: 06.11.11
- * Time: 19:39
+ * Date: 09.07.12
+ * Time: 16:53
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface ListField {
-    public Class type();
+public @interface EnumSetField {
+  public Class type();
 }

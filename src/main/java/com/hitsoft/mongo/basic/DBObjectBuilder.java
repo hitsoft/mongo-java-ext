@@ -5,30 +5,46 @@ package com.hitsoft.mongo.basic;
  */
 public class DBObjectBuilder {
 
-    DBObjectExt obj = new BasicDBObjectExt();
+  DBObjectExt obj = new BasicDBObjectExt();
 
-    private DBObjectBuilder() {
-    }
+  private DBObjectBuilder() {
+  }
 
-    public static DBObjectBuilder start() {
-        return new DBObjectBuilder();
-    }
+  public static DBObjectBuilder start() {
+    return new DBObjectBuilder();
+  }
 
-    public DBObjectBuilder add(Enum field, Object value) {
-        obj.put(field, value);
-        return this;
-    }
+  public DBObjectBuilder addNotNull(Enum field, Object value) {
+    if (value != null)
+      obj.put(field, value);
+    return this;
+  }
 
-    public DBObjectBuilder add(DBObjectExt values) {
-        obj.asDBObject().putAll(values.asDBObject().toMap());
-        return this;
-    }
+  public DBObjectBuilder add(String field, Object value) {
+    obj.put(field, value);
+    return this;
+  }
 
-    public DBObjectExt get() {
-        return obj;
-    }
+  public DBObjectBuilder add(Enum field, Object value) {
+    obj.put(field, value);
+    return this;
+  }
 
-    public static DBObjectExt single(Enum field, Object value) {
-        return start().add(field, value).get();
-    }
+  public DBObjectBuilder add(Enum[] field, Object value) {
+    obj.put(field, value);
+    return this;
+  }
+
+  public DBObjectBuilder add(DBObjectExt values) {
+    obj.asDBObject().putAll(values.asDBObject().toMap());
+    return this;
+  }
+
+  public DBObjectExt get() {
+    return obj;
+  }
+
+  public static DBObjectExt single(Enum field, Object value) {
+    return start().add(field, value).get();
+  }
 }
