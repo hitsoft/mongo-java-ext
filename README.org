@@ -1,0 +1,25 @@
+* Mongo Java Extended
+
+* Usage
+
+#+BEGIN_EXAMPLE
+  <repositories>
+    <repository>
+      <id>mongo-java-ext-repository</id>
+      <url>https://raw.github.com/smeagol74/mongo-java-ext/mvn-repo</url>
+      <!-- use snapshot version -->
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.hitsoft</groupId>
+      <artifactId>mongo-java-ext</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+#+END_EXAMPLE
