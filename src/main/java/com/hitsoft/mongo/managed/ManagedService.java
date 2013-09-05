@@ -111,6 +111,10 @@ public class ManagedService {
             field.setAccessible(true);
             if (field.getType().equals(Integer.class) && (fieldValue instanceof Double))
               field.set(result, ((Double) (fieldValue)).intValue());
+            else if (field.getType().equals(Long.class) && (fieldValue instanceof Double))
+              field.set(result, ((Double) (fieldValue)).longValue());
+            else if (field.getType().equals(Long.class) && (fieldValue instanceof Integer))
+              field.set(result, ((Integer) (fieldValue)).longValue());
             else if (field.getType().equals(Currency.class) && (fieldValue instanceof Double))
               field.set(result, Currency.valueOf(((Double) (fieldValue)).intValue()));
             else if (field.getType().equals(Currency.class) && (fieldValue instanceof Long))
