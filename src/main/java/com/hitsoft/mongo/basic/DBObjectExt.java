@@ -57,6 +57,8 @@ public interface DBObjectExt {
 
   Value getV(Enum field);
 
+  Value getV(Enum[] field);
+
   Object put(String field, Object value);
 
   Object put(Enum field, Object value);

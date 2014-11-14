@@ -11,14 +11,20 @@ public class SortBuilder extends BaseBuilder {
         return new SortBuilder();
     }
 
-    public SortBuilder asc(Enum field) {
+    public SortBuilder asc(Enum[] field) {
         obj.add(field, 1);
         return this;
     }
+    public SortBuilder asc(Enum field) {
+        return asc(new Enum[]{field});
+    }
 
-    public SortBuilder desc(Enum field) {
+    public SortBuilder desc(Enum[] field) {
         obj.add(field, -1);
         return this;
+    }
+    public SortBuilder desc(Enum field) {
+        return desc(new Enum[]{field});
     }
 
 }

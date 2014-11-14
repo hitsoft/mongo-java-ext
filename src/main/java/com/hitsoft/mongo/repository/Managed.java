@@ -361,6 +361,11 @@ public class Managed {
       return this;
     }
 
+    public QueryBuilder<T> notEqual(Enum[] field, Object value) {
+      searchBuilder.notEquals(field, value);
+      return this;
+    }
+
     public QueryBuilder<T> in(Enum field, Enum[] values) {
       List<String> vals = new ArrayList<String>();
       for (Enum val : values)
@@ -420,14 +425,20 @@ public class Managed {
     }
 
     // Ordering
-    public QueryBuilder<T> ascOrderBy(Enum field) {
+    public QueryBuilder<T> ascOrderBy(Enum[] field) {
       sortBuilder.asc(field);
       return this;
     }
+    public QueryBuilder<T> ascOrderBy(Enum field) {
+      return ascOrderBy(new Enum[]{field});
+    }
 
-    public QueryBuilder<T> descOrderBy(Enum field) {
+    public QueryBuilder<T> descOrderBy(Enum[] field) {
       sortBuilder.desc(field);
       return this;
+    }
+    public QueryBuilder<T> descOrderBy(Enum field) {
+      return descOrderBy(new Enum[]{field});
     }
 
     public QueryBuilder<T> orderByAcs(Enum[] fields) {
@@ -468,14 +479,20 @@ public class Managed {
       }
 
       // Ordering
-      public Exec<T> ascOrderBy(Enum field) {
+      public Exec<T> ascOrderBy(Enum[] field) {
         sortBuilder.asc(field);
         return this;
       }
+      public Exec<T> ascOrderBy(Enum field) {
+        return ascOrderBy(new Enum[]{field});
+      }
 
-      public Exec<T> descOrderBy(Enum field) {
+      public Exec<T> descOrderBy(Enum[] field) {
         sortBuilder.desc(field);
         return this;
+      }
+      public Exec<T> descOrderBy(Enum field) {
+        return descOrderBy(new Enum[]{field});
       }
 
       public Exec<T> orderByAcs(Enum[] fields) {

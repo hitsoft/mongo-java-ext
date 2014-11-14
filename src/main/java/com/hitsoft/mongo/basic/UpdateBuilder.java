@@ -40,13 +40,16 @@ public class UpdateBuilder extends BaseBuilder {
     $BIT
   }
 
-  private UpdateBuilder appendSingle(Operation operation, Enum field, Object value) {
+  private UpdateBuilder appendSingle(Operation operation, Enum[] field, Object value) {
     DBObjectExt res = obj.obj.getV(operation).asObject();
     if (res == null)
       res = new BasicDBObjectExt();
     res.put(field, value);
     obj.add(operation, res);
     return this;
+  }
+  private UpdateBuilder appendSingle(Operation operation, Enum field, Object value) {
+    return appendSingle(operation, new Enum[]{field}, value);
   }
 
   /**
@@ -56,8 +59,11 @@ public class UpdateBuilder extends BaseBuilder {
    * @param value value
    * @return <code>this</code>
    */
-  public UpdateBuilder inc(Enum field, Number value) {
+  public UpdateBuilder inc(Enum[] field, Number value) {
     return appendSingle(Operation.$INC, field, value);
+  }
+  public UpdateBuilder inc(Enum field, Number value) {
+    return inc(new Enum[]{field}, value);
   }
 
   /**
@@ -67,8 +73,11 @@ public class UpdateBuilder extends BaseBuilder {
    * @param value value
    * @return <code>this</code>
    */
-  public UpdateBuilder set(Enum field, Object value) {
+  public UpdateBuilder set(Enum[] field, Object value) {
     return appendSingle(Operation.$SET, field, value);
+  }
+  public UpdateBuilder set(Enum field, Object value) {
+    return set(new Enum[]{field}, value);
   }
 
   /**
@@ -88,8 +97,11 @@ public class UpdateBuilder extends BaseBuilder {
    * @param field updated field
    * @return <code>this</code>
    */
-  public UpdateBuilder unset(Enum field) {
+  public UpdateBuilder unset(Enum[] field) {
     return appendSingle(Operation.$UNSET, field, 1);
+  }
+  public UpdateBuilder unset(Enum field) {
+    return unset(new Enum[]{field});
   }
 
   /**
@@ -104,12 +116,15 @@ public class UpdateBuilder extends BaseBuilder {
    * @param value value
    * @return <code>this</code>
    */
-  public UpdateBuilder push(Enum field, Object value) {
+  public UpdateBuilder push(Enum[] field, Object value) {
     if (value instanceof List) {
       return appendSingle(Operation.$PUSH_ALL, field, value);
     } else {
       return appendSingle(Operation.$PUSH, field, value);
     }
+  }
+  public UpdateBuilder push(Enum field, Object value) {
+    return push(new Enum[]{field}, value);
   }
 
   /**
@@ -123,12 +138,15 @@ public class UpdateBuilder extends BaseBuilder {
    * @param value value
    * @return <code>this</code>
    */
-  public UpdateBuilder addToSet(Enum field, Object value) {
+  public UpdateBuilder addToSet(Enum[] field, Object value) {
     if (value instanceof List) {
       return appendSingle(Operation.$ADD_TO_SET, field, com.hitsoft.mongo.basic.DBObjectBuilder.single(Operation.$EACH, value));
     } else {
       return appendSingle(Operation.$ADD_TO_SET, field, value);
     }
+  }
+  public UpdateBuilder addToSet(Enum field, Object value) {
+    return addToSet(new Enum[]{field}, value);
   }
 
   /**
@@ -137,8 +155,11 @@ public class UpdateBuilder extends BaseBuilder {
    * @param field updated field
    * @return <code>this</code>
    */
-  public UpdateBuilder popLast(Enum field) {
+  public UpdateBuilder popLast(Enum[] field) {
     return appendSingle(Operation.$POP, field, 1);
+  }
+  public UpdateBuilder popLast(Enum field) {
+    return popLast(new Enum[]{field});
   }
 
   /**
@@ -147,8 +168,11 @@ public class UpdateBuilder extends BaseBuilder {
    * @param field updated field
    * @return <code>this</code>
    */
-  public UpdateBuilder popFirst(Enum field) {
+  public UpdateBuilder popFirst(Enum[] field) {
     return appendSingle(Operation.$POP, field, -1);
+  }
+  public UpdateBuilder popFirst(Enum field) {
+    return popFirst(new Enum[]{field});
   }
 
   /**
@@ -165,12 +189,15 @@ public class UpdateBuilder extends BaseBuilder {
    * @param value value
    * @return <code>this</code>
    */
-  public UpdateBuilder pull(Enum field, Object value) {
+  public UpdateBuilder pull(Enum[] field, Object value) {
     if (value instanceof List) {
       return appendSingle(Operation.$PULL_ALL, field, value);
     } else {
       return appendSingle(Operation.$PULL, field, value);
     }
+  }
+  public UpdateBuilder pull(Enum field, Object value) {
+    return pull(new Enum[]{field}, value);
   }
 
   /**
@@ -180,8 +207,17 @@ public class UpdateBuilder extends BaseBuilder {
    * @param newField new field
    * @return <code>this</code>
    */
-  public UpdateBuilder rename(Enum oldField, Enum newField) {
+  public UpdateBuilder rename(Enum[] oldField, Enum[] newField) {
     return appendSingle(Operation.$RENAME, oldField, FieldName.get(newField));
+  }
+  public UpdateBuilder rename(Enum oldField, Enum newField) {
+    return rename(new Enum[]{oldField}, new Enum[]{newField});
+  }
+  public UpdateBuilder rename(Enum oldField, Enum[] newField) {
+    return rename(new Enum[]{oldField}, newField);
+  }
+  public UpdateBuilder rename(Enum[] oldField, Enum newField) {
+    return rename(oldField, new Enum[]{newField});
   }
 
   public void exec() {
