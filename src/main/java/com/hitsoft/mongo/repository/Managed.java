@@ -17,7 +17,6 @@ public class Managed {
   }
 
   public static <T extends ManagedObject> T insert(T object) {
-    assert (object._id == null) : "Do not support saving of old objects. Please use updates instead.";
     DBObject obj = ManagedService.toDBObject(object);
     Basic repo = getRepository(object.getClass());
     T result = ManagedService.fromDBObject(repo.insert(obj), (Class<T>) object.getClass());
