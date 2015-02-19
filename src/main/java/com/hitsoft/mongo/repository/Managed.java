@@ -373,7 +373,17 @@ public class Managed {
     }
 
     public QueryBuilder<T> in(Enum field, Collection<String> values) {
-      searchBuilder.in(field, values);
+      return in(field, values, false);
+    }
+
+    public QueryBuilder<T> in(Enum field, Collection<String> values, boolean asObjectId) {
+      if (asObjectId) {
+        List<ObjectId> res = new ArrayList<ObjectId>();
+        for (String id : values) 
+          res.add(new ObjectId(id));
+        searchBuilder.in(field, res);
+      } else
+        searchBuilder.in(field, values);
       return this;
     }
 
