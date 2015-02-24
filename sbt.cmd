@@ -1,0 +1,3 @@
+set SCRIPT_DIR=.lib/0.13.0/
+chcp 65001
+"C:\Program Files\Java\jdk1.7.0_67\bin\java.exe" -Dscalatra_project_root="W:/prj/Orphogrammatica/Orphogrammka/my/mongo-java-ext/" -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5105  -Xms1024M -Xmx4096M -Dfile.encoding=UTF8 -XX:ReservedCodeCacheSize=512m -Dlessc=lessc.cmd -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=512M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
