@@ -1,3 +1,5 @@
+crossScalaVersions := Seq("2.10.5", "2.11.6")
+
 javacOptions ++= Seq(
       "-encoding", "UTF-8",
       "-target", "1.7",
