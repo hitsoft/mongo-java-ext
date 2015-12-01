@@ -104,7 +104,9 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
 
         public double asDouble() {
             double result = 0;
-            if (val instanceof Float)
+            if (val instanceof Integer)
+                result = 1.0 * ((Integer) val);
+            else if (val instanceof Float)
                 result = ((Float) val).doubleValue();
             else if (val instanceof Double)
                 result = (Double) val;
