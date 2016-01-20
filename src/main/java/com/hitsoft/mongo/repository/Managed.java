@@ -372,6 +372,14 @@ public class Managed {
       return in(field, vals);
     }
 
+    public QueryBuilder<T> in(Enum[] field, Enum[] values) {
+      List<String> vals = new ArrayList<String>();
+      for (Enum val : values)
+        vals.add(val.name());
+      searchBuilder.in(field, vals);
+      return this;
+    }
+
     public QueryBuilder<T> in(Enum field, Collection<String> values) {
       return in(field, values, false);
     }
