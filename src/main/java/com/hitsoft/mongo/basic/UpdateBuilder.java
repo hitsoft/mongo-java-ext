@@ -48,8 +48,18 @@ public class UpdateBuilder extends BaseBuilder {
     obj.add(operation, res);
     return this;
   }
+
   private UpdateBuilder appendSingle(Operation operation, Enum field, Object value) {
     return appendSingle(operation, new Enum[]{field}, value);
+  }
+
+  private UpdateBuilder appendSingle(Operation operation, String field, Object value) {
+    DBObjectExt res = obj.obj.getV(operation).asObject();
+    if (res == null)
+      res = new BasicDBObjectExt();
+    res.put(field, value);
+    obj.add(operation, res);
+    return this;
   }
 
   /**
@@ -62,6 +72,11 @@ public class UpdateBuilder extends BaseBuilder {
   public UpdateBuilder inc(Enum[] field, Number value) {
     return appendSingle(Operation.$INC, field, value);
   }
+
+  public UpdateBuilder inc(String field, Number value) {
+    return appendSingle(Operation.$INC, field, value);
+  }
+
   public UpdateBuilder inc(Enum field, Number value) {
     return inc(new Enum[]{field}, value);
   }
@@ -76,6 +91,11 @@ public class UpdateBuilder extends BaseBuilder {
   public UpdateBuilder set(Enum[] field, Object value) {
     return appendSingle(Operation.$SET, field, value);
   }
+
+  public UpdateBuilder set(String field, Object value) {
+    return appendSingle(Operation.$SET, field, value);
+  }
+
   public UpdateBuilder set(Enum field, Object value) {
     return set(new Enum[]{field}, value);
   }
@@ -100,6 +120,7 @@ public class UpdateBuilder extends BaseBuilder {
   public UpdateBuilder unset(Enum[] field) {
     return appendSingle(Operation.$UNSET, field, 1);
   }
+
   public UpdateBuilder unset(Enum field) {
     return unset(new Enum[]{field});
   }
@@ -107,7 +128,7 @@ public class UpdateBuilder extends BaseBuilder {
   /**
    * appends value to field, if field is an existing array, otherwise sets field to the array [value]
    * if field is not present. If field is present but is not an array, an error condition is raised.
-   * <p/>
+   * <p>
    * if value is instance of List then appends each value in value_array to field, if field is an
    * existing array, otherwise sets field to the array value_array if field is not present. If field
    * is present but is not an array, an error condition is raised.
@@ -123,6 +144,7 @@ public class UpdateBuilder extends BaseBuilder {
       return appendSingle(Operation.$PUSH, field, value);
     }
   }
+
   public UpdateBuilder push(Enum field, Object value) {
     return push(new Enum[]{field}, value);
   }
@@ -131,7 +153,7 @@ public class UpdateBuilder extends BaseBuilder {
    * Adds value to the array only if its not in the array already, if field is an existing array,
    * otherwise sets field to the array value if field is not present. If field is present but is not an
    * array, an error condition is raised.
-   * <p/>
+   * <p>
    * To add many values value should be instance of List
    *
    * @param field updated field
@@ -145,6 +167,7 @@ public class UpdateBuilder extends BaseBuilder {
       return appendSingle(Operation.$ADD_TO_SET, field, value);
     }
   }
+
   public UpdateBuilder addToSet(Enum field, Object value) {
     return addToSet(new Enum[]{field}, value);
   }
@@ -158,6 +181,7 @@ public class UpdateBuilder extends BaseBuilder {
   public UpdateBuilder popLast(Enum[] field) {
     return appendSingle(Operation.$POP, field, 1);
   }
+
   public UpdateBuilder popLast(Enum field) {
     return popLast(new Enum[]{field});
   }
@@ -171,6 +195,7 @@ public class UpdateBuilder extends BaseBuilder {
   public UpdateBuilder popFirst(Enum[] field) {
     return appendSingle(Operation.$POP, field, -1);
   }
+
   public UpdateBuilder popFirst(Enum field) {
     return popFirst(new Enum[]{field});
   }
@@ -178,10 +203,10 @@ public class UpdateBuilder extends BaseBuilder {
   /**
    * removes all occurrences of value from field, if field is an array. If field is
    * present but is not an array, an error condition is raised.
-   * <p/>
+   * <p>
    * if value is instance of List then removes all occurrences of each value in
    * value_array from field, if field is an array.
-   * <p/>
+   * <p>
    * value can also be instance of SearchBuilder in this case the matched values will be
    * removed from the array
    *
@@ -196,6 +221,7 @@ public class UpdateBuilder extends BaseBuilder {
       return appendSingle(Operation.$PULL, field, value);
     }
   }
+
   public UpdateBuilder pull(Enum field, Object value) {
     return pull(new Enum[]{field}, value);
   }
@@ -210,18 +236,25 @@ public class UpdateBuilder extends BaseBuilder {
   public UpdateBuilder rename(Enum[] oldField, Enum[] newField) {
     return appendSingle(Operation.$RENAME, oldField, FieldName.get(newField));
   }
+
   public UpdateBuilder rename(Enum oldField, Enum newField) {
     return rename(new Enum[]{oldField}, new Enum[]{newField});
   }
+
   public UpdateBuilder rename(Enum oldField, Enum[] newField) {
     return rename(new Enum[]{oldField}, newField);
   }
+
   public UpdateBuilder rename(Enum[] oldField, Enum newField) {
     return rename(oldField, new Enum[]{newField});
   }
 
   public void exec() {
+    exec(false, true);
+  }
+
+  public void exec(boolean upsert, boolean multi) {
     assert (repository != null) && (searchBuilder != null) : "You can not use exec() in standalone mode.";
-    repository.collection.update(searchBuilder.get(), this.get(), false, true);
+    repository.collection.update(searchBuilder.get(), this.get(), upsert, multi);
   }
 }
