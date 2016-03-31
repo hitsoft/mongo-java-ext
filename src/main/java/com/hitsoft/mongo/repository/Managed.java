@@ -279,6 +279,11 @@ public class Managed {
       this.clazz = clazz;
     }
 
+    public QueryBuilder<T> prepared(DBObject obj) {
+      searchBuilder = SearchBuilder.fromDBObject(obj);
+      return this;
+    }
+
     // Limit fields
     public QueryBuilder<T> selectFields(Enum field) {
       if (partialBuilder == null) {
