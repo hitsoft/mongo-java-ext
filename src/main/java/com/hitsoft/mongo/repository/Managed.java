@@ -242,6 +242,13 @@ public class Managed {
         return this;
       }
 
+      public Group first(Enum toField, Enum field) {
+        obj.add(toField, DBObjectBuilder.start()
+                .add(Operation.$FIRST, groupFieldName(field))
+                .get());
+        return this;
+      }
+
       public DBObjectExt get() {
         DBObjectExt result = obj.get();
         if (!result.asDBObject()
