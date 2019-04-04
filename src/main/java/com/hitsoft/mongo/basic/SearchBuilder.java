@@ -372,6 +372,20 @@ public class SearchBuilder extends BaseBuilder {
     }
 
     /**
+     * The $all operator is analogous to the $in but with operator and instead of or.
+     *
+     * @param field  condition field
+     * @param values value
+     * @return <code>this</code>
+     */
+    public SearchBuilder allSimple(Enum[] field, Collection values) {
+        return singleAction(field, Operator.$ALL, values);
+    }
+    public SearchBuilder allSimple(Enum field, Collection values) {
+        return allSimple(new Enum[]{field}, values);
+    }
+
+    /**
      * The $nin operator is similar to $in except that it selects objects for which the specified field does
      * not have any value in the specified array.
      *

@@ -406,6 +406,10 @@ public class Managed {
         searchBuilder.in(field, values);
       return this;
     }
+    public QueryBuilder<T> all(Enum field, Collection<String> values) {
+      searchBuilder.allSimple(field, values);
+      return this;
+    }
 
     public QueryBuilder<T> idIn(Collection<String> ids) {
       List<ObjectId> res = new ArrayList<ObjectId>();
