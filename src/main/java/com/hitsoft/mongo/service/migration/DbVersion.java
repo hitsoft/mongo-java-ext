@@ -1,7 +1,10 @@
 package com.hitsoft.mongo.service.migration;
 
 import com.hitsoft.mongo.managed.ManagedObject;
+import com.hitsoft.mongo.managed.ObjectField;
 import com.hitsoft.mongo.repository.Managed;
+
+import java.util.Date;
 
 /**
  * User: smeagol
@@ -10,34 +13,62 @@ import com.hitsoft.mongo.repository.Managed;
  */
 public class DbVersion extends ManagedObject {
 
-  public static enum Field {
-    VERSION
-  }
+	public static enum Field {
+		VERSION,
+		LOCK
+	}
 
-  public String version;
+	public String version;
 
-  public DbVersion() {
-  }
+	@ObjectField(type = Lock.class)
+	public Lock lock;
 
-  public Update update() {
-    return new Update();
-  }
+	public static class Lock {
+		public String comment;
+		public Date date;
+	}
 
-  public class Update {
-    public void setVersion(String version) {
-      DbVersion.this.version = version;
-      updateFields(Field.VERSION);
-    }
-  }
+	public DbVersion() {
+	}
 
-  public static class Query {
-    private static Managed.QueryBuilder<DbVersion> q() {
-      return Managed.query(DbVersion.class);
-    }
+	public Update update() {
+		return new Update();
+	}
 
-    public static Managed.QueryBuilder<DbVersion>.Exec<DbVersion> all() {
-      return q().exec;
-    }
-  }
+	public class Update {
+		public void setVersion(String version) {
+			DbVersion.this.version = version;
+			updateFields(Field.VERSION);
+		}
+
+		public boolean lock(String comment) {
+			if (DbVersion.this.lock == null) {
+				DbVersion.this.lock = new Lock();
+				DbVersion.this.lock.date = new Date();
+				DbVersion.this.lock.comment = comment;
+				updateFields(Field.LOCK);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		public void unlock() {
+			if (DbVersion.this.lock != null) {
+				DbVersion.this.lock = null;
+				updateFields(Field.LOCK);
+			}
+		}
+	}
+
+	public static class Query {
+		private static Managed.QueryBuilder<DbVersion> q() {
+			return Managed.query(DbVersion.class);
+		}
+
+		public static Managed.QueryBuilder<DbVersion>.Exec<DbVersion> all() {
+			return q().exec;
+		}
+	}
 
 }
