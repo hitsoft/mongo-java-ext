@@ -249,14 +249,21 @@ public class Managed {
 				return this;
 			}
 
-			public DBObjectExt get() {
-				DBObjectExt result = obj.get();
-				if (!result.asDBObject()
-					.containsField(FieldName.get(ManagedObject.Field._ID))) {
-					result.put(ManagedObject.Field._ID, null);
-				}
-				return result;
-			}
+      public Group last(Enum toField, Enum field) {
+        obj.add(toField, DBObjectBuilder.start()
+                .add(Operation.$LAST, groupFieldName(field))
+                .get());
+        return this;
+      }
+
+      public DBObjectExt get() {
+        DBObjectExt result = obj.get();
+        if (!result.asDBObject()
+                .containsField(FieldName.get(ManagedObject.Field._ID))) {
+          result.put(ManagedObject.Field._ID, null);
+        }
+        return result;
+      }
 
 			public static enum Operation {
 				$ADD_TO_SET,

@@ -1,5 +1,8 @@
 package com.hitsoft.mongo.basic;
 
+import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
+
 import java.util.Map;
 
 /**
@@ -14,6 +17,10 @@ public class DBObjectBuilder {
 
   public static DBObjectBuilder start() {
     return new DBObjectBuilder();
+  }
+
+  public static DBObjectExt parse(String json) {
+    return new BasicDBObjectExt((DBObject) JSON.parse(json));
   }
 
   public DBObjectBuilder addNotNull(Enum field, Object value) {
