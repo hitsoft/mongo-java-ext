@@ -6,6 +6,7 @@ import com.hitsoft.mongo.managed.ManagedService;
 import com.mongodb.AggregationOutput;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 import org.bson.types.ObjectId;
 
 import java.util.*;
@@ -211,6 +212,12 @@ public class Managed {
         return this;
       }
 
+      public Group _id_subItem(Enum field, int idx) {
+        obj.add(ManagedObject.Field._ID, DBObjectBuilder.start().add(Operation.$ARRAY_ELEM_AT, JSON.parse(String.format("[\"$%s\", %d]", FieldName.get(field), idx))).get());
+
+        return this;
+      }
+
       /**
        * суммирует значения поля
        *
@@ -273,7 +280,8 @@ public class Managed {
         $MIN,
         $AVG,
         $PUSH,
-        $SUM
+        $SUM,
+        $ARRAY_ELEM_AT
       }
     }
   }
