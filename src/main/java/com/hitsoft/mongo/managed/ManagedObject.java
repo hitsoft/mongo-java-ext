@@ -129,7 +129,8 @@ public class ManagedObject {
   }
 
   public static enum Field {
-    _ID
+    _ID,
+    TOTAL
   }
 
   @Override
