@@ -24,10 +24,10 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
         putAll(source);
     }
 
-    private static class BasicValue implements Value {
+    public static class BasicValue implements Value {
         Object val;
 
-        private BasicValue(Object val) {
+        public BasicValue(Object val) {
             this.val = val;
         }
 
@@ -86,8 +86,8 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
             return result;
         }
 
-        public Currency asMoney() {
-            Currency result = null;
+        public com.hitsoft.types.Currency asMoney() {
+            com.hitsoft.types.Currency result = null;
             if (val != null) {
                 result = Currency.valueOf(asLong());
             }
