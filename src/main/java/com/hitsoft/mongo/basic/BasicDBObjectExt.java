@@ -1,6 +1,7 @@
 package com.hitsoft.mongo.basic;
 
 import com.hitsoft.types.Currency;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.bson.types.ObjectId;
@@ -41,7 +42,7 @@ public class BasicDBObjectExt extends BasicDBObject implements DBObjectExt {
 
         public DBObjectExt asObject() {
             DBObjectExt result = null;
-            if (val instanceof DBObject)
+            if ((val instanceof DBObject) && !(val instanceof BasicDBList))
                 result = new BasicDBObjectExt((DBObject) val);
             return result;
         }
