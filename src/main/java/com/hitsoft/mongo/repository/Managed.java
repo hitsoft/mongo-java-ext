@@ -422,6 +422,36 @@ public class Managed {
             return this;
         }
 
+        public QueryBuilder<T> notIn(Enum field, Enum[] values) {
+            List<String> vals = new ArrayList<String>();
+            for (Enum val : values)
+                vals.add(val.name());
+            return notIn(field, vals);
+        }
+
+        public QueryBuilder<T> notIn(Enum[] field, Enum[] values) {
+            List<String> vals = new ArrayList<String>();
+            for (Enum val : values)
+                vals.add(val.name());
+            searchBuilder.notIn(field, vals);
+            return this;
+        }
+
+        public QueryBuilder<T> notIn(Enum field, Collection<String> values) {
+            return notIn(field, values, false);
+        }
+
+        public QueryBuilder<T> notIn(Enum field, Collection<String> values, boolean asObjectId) {
+            if (asObjectId) {
+                List<ObjectId> res = new ArrayList<ObjectId>();
+                for (String id : values)
+                    res.add(new ObjectId(id));
+                searchBuilder.notIn(field, res);
+            } else
+                searchBuilder.notIn(field, values);
+            return this;
+        }
+
         public QueryBuilder<T> all(Enum field, Collection<String> values) {
             searchBuilder.allSimple(field, values);
             return this;
